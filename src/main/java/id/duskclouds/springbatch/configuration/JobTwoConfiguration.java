@@ -22,7 +22,8 @@ public class JobTwoConfiguration {
     @Bean
     public Step twoMyStepOne() {
         return stepBuilderFactory.get("twoMyStepOne").tasklet(((contribution, chunkContext) -> {
-            System.out.println("twoMyStepOne was executed");
+            System.out.println(String.format("twoMyStepOne was executed executed on thread %s",
+                Thread.currentThread().getName()));
             return RepeatStatus.FINISHED;
         })).build();
     }
@@ -30,7 +31,7 @@ public class JobTwoConfiguration {
     @Bean
     public Step twoMyStepTwo() {
         return stepBuilderFactory.get("twoMyStepTwo").tasklet(((contribution, chunkContext) -> {
-            System.out.println("twoMyStepTwo was executed");
+            System.out.println(String.format("twoMyStepTwo was executed executed on thread %s", Thread.currentThread().getName()));
             return RepeatStatus.FINISHED;
         })).build();
     }
