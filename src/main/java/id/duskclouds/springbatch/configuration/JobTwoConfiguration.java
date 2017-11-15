@@ -28,6 +28,7 @@ public class JobTwoConfiguration {
             SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
             System.out.println(String.format("twoMyStepOne was executed executed on thread %s at %s",
                 Thread.currentThread().getName(), formatter.format(new Date())));
+            Thread.sleep(8000l);
             return RepeatStatus.FINISHED;
         })).build();
     }

@@ -13,7 +13,7 @@ public class SchedulerJobTwo {
     @Autowired
     public JobOperator jobOperator;
 
-    @Scheduled(fixedDelay = 8000l)
+    @Scheduled(fixedDelay = 18000l)
     public void runJobTwo() throws Exception {
         this.jobOperator.startNextInstance("jobTwo");
     }

@@ -22,4 +22,9 @@ public class Scheduler {
     public void runJobFour() throws Exception {
         this.jobOperator.startNextInstance("jobFour");
     }
+
+    @Scheduled(fixedDelay = 20000l)
+    public void runJobFive() throws Exception {
+        this.jobOperator.startNextInstance("jobFive");
+    }
 }
