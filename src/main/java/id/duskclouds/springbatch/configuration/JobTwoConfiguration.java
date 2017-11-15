@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Configuration
 public class JobTwoConfiguration {
 
@@ -22,8 +25,9 @@ public class JobTwoConfiguration {
     @Bean
     public Step twoMyStepOne() {
         return stepBuilderFactory.get("twoMyStepOne").tasklet(((contribution, chunkContext) -> {
-            System.out.println(String.format("twoMyStepOne was executed executed on thread %s",
-                Thread.currentThread().getName()));
+            SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+            System.out.println(String.format("twoMyStepOne was executed executed on thread %s at %s",
+                Thread.currentThread().getName(), formatter.format(new Date())));
             return RepeatStatus.FINISHED;
         })).build();
     }
@@ -31,7 +35,8 @@ public class JobTwoConfiguration {
     @Bean
     public Step twoMyStepTwo() {
         return stepBuilderFactory.get("twoMyStepTwo").tasklet(((contribution, chunkContext) -> {
-            System.out.println(String.format("twoMyStepTwo was executed executed on thread %s", Thread.currentThread().getName()));
+            SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+            System.out.println(String.format("twoMyStepTwo was executed executed on thread %s at %s", Thread.currentThread().getName(), formatter.format(new Date())));
             return RepeatStatus.FINISHED;
         })).build();
     }
