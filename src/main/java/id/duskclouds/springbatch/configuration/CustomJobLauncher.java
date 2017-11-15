@@ -17,6 +17,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @Configuration
 public class CustomJobLauncher extends DefaultBatchConfigurer implements ApplicationContextAware {
@@ -66,13 +68,26 @@ public class CustomJobLauncher extends DefaultBatchConfigurer implements Applica
         return simpleJobOperator;
     }
 
+    @Bean
+    public TaskExecutor taskExecutor() {
+//        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+//        executor.setCorePoolSize(3);
+//        executor.setMaxPoolSize(3);
+//        executor.setThreadNamePrefix("default_task_executor_thread");
+//        executor.initialize();
+//        executor.setWaitForTasksToCompleteOnShutdown(true);
+        SimpleAsyncTaskExecutor executor = new SimpleAsyncTaskExecutor();
+        executor.setConcurrencyLimit(3);
+        return executor;
+    }
+
     @Override
     public JobLauncher getJobLauncher() {
         SimpleJobLauncher jobLauncher = null;
         try {
             jobLauncher = new SimpleJobLauncher();
             jobLauncher.setJobRepository(jobRepository);
-            jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
+            jobLauncher.setTaskExecutor(taskExecutor());
             jobLauncher.afterPropertiesSet();
         }
         catch (Exception e) {
